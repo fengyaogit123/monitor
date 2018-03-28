@@ -6,4 +6,5 @@ export default (app: Application) => {
     const { project, log } = v1;
     router.get('/project/create', project.create );
     router.get('/log/create', log.create );
+    router.get('/', log.list );
 };

@@ -9,5 +9,8 @@ class logController extends egg_1.Controller {
             return this.ctx.validate(result);
         this.ctx.body = await this.service.log.create(this.ctx.query);
     }
+    async list() {
+        this.ctx.body = await this.service.log.list();
+    }
 }
 exports.default = logController;

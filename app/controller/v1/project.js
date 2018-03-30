@@ -10,5 +10,9 @@ class ProjectController extends egg_1.Controller {
         await this.ctx.validate(rule, this.ctx.query);
         this.ctx.body = await this.service.project.create(this.ctx.query);
     }
+    //获取全部
+    async list() {
+        this.ctx.body = await this.service.project.list(this.ctx.query);
+    }
 }
 exports.default = ProjectController;

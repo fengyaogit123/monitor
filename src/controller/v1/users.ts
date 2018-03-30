@@ -9,7 +9,7 @@ export default class UserController extends Controller {
         }
         const data: any = this.ctx.request.query;
         await this.ctx.validate(rule, data);
-        
+
         this.ctx.body = await this.ctx.service.users.create(data)
     }
 }

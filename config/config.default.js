@@ -2,7 +2,7 @@
 const { error } = require('../app/utils/utils')
 module.exports = appInfo => {
     const config = exports = {};
-
+    
     // use for cookie sign key, should change to your own and keep security
     config.keys = appInfo.name + '_1516533966144_7741';
     config.auth_cookie_name = 'monitor';

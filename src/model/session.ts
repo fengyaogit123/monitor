@@ -2,11 +2,10 @@ import * as Egg from 'egg'
 export default (app: Egg.Application) => {
     const mongoose = app.mongoose;
     const Schema = mongoose.Schema;
-    return mongoose.model('Token',
+    return mongoose.model('Session',
         new Schema({
             key: String,
-            outTime: Date,
-            value: { type: Schema.Types.ObjectId, ref: 'Users' }
+            value: String
         }, {
                 versionKey: false,
             }));

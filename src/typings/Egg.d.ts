@@ -6,7 +6,7 @@ import ProjectService from '../service/project'
 import UserService from '../service/users'
 declare module 'egg' {
     export interface Application {
-        middlewares: any;
+        middleware: any;
         mongoose: Mongoose;
         passport: any;
         model: {

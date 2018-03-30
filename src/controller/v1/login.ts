@@ -10,13 +10,10 @@ export default class LoginController extends Controller {
             }
             return;
         }
-        const existUser = this.ctx.user;
-        //生成token
-        const token = this.ctx.helper.sha256(`${Date.now()}`, existUser.email, existUser.password);
-        //保存token到db 并设置半小时过期时间
-        this.ctx.body = {
-            token,
-            data: existUser
-        };
+        this.ctx.body = this.ctx.user
+    }
+    async loginOut(){
+        this.ctx.logout();
+        this.ctx.body=""
     }
 }

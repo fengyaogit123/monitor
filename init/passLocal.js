@@ -1,10 +1,10 @@
+const LocalStrategy = require('passport-local').Strategy;
 module.exports = (app) => {
     // 挂载 strategy
     app.passport.use(new LocalStrategy({
         passReqToCallback: true,
         usernameField: 'email',
         passwordField: 'password',
-        session: false
     }, (req, email, password, done) => {
         const user = {
             provider: 'local',
@@ -22,7 +22,6 @@ module.exports = (app) => {
         });
         if (existUser) {
             //生成token
-
             return existUser
         }
         return {

@@ -5,10 +5,11 @@ module.exports = appInfo => {
 
     // use for cookie sign key, should change to your own and keep security
     config.keys = appInfo.name + '_1516533966144_7741';
+    config.auth_cookie_name = 'monitor';
     // add your config here
     config.middleware = [];
     config.mongoose = {
-        url: 'mongodb://127.0.0.1/monitor',
+        url: 'mongodb://118.24.74.131/monitor',
         options: {},
     };
     //web安全

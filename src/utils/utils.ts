@@ -69,32 +69,31 @@ export function error(ctx: any, obj = {}): void {
 export function initUUID(): string {
     return UUID().replace(/-/g, '');
 }
-export async function getPage({ pageNo = 0, size = 20 }: { size: number, pageNo: number }, callback: Function): Promise<any> {
+export async function QueryPage({ pageNo = 1, size = 20 }: { size: number, pageNo: number }, callback: Function): Promise<any> {
     pageNo = +pageNo;
     size = +size;
-    if (!is().Number(pageNo)) pageNo = 0;
+    if (!is().Number(pageNo)) pageNo = 1;
     if (!is().Number(size)) size = 20;
-    if (pageNo < 0) pageNo = 0;
+    if (pageNo < 1) pageNo = 1;
     if (size <= 0) size = 20;
     if (size > 1000) size = 1000;
-    const result = await callback({
+    const count = await callback().count();
+    const rows = await callback().skip((pageNo - 1) * size).limit(size);
+    return {
+        size,
         pageNo,
-        limit: size,
-        offset: pageNo * size,
-        end: (pageNo + 1) * size
-    });
-    result.size = size;
-    result.pageNo = pageNo;
-    result.pageSize = Math.ceil(result.count / size);
-    return result;
+        pageSize: Math.ceil(count / size),
+        count,
+        rows
+    };
 }
 
-export function validate(rules: Object, data: Object) {
+export function validate(rules: Object, data: Object): Promise<{ status: number, message: string, code: string } | null> {
     return new Promise((resolve, reject) => {
         new validators(rules).validate(data, (errors: any, fields: any[]) => {
             if (errors) {
                 resolve({
-                    status: 422,
+                    status: 417,
                     code: 'invalid param',
                     message: errors[0].message
                 })

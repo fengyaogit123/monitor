@@ -12,7 +12,7 @@ exports.default = (app) => {
         phoneName: String,
         isSolve: Boolean,
         errorRank: Number,
-        errorInfo: [{
+        actions: [{
                 type: String,
                 target: String,
                 time: String
@@ -21,6 +21,13 @@ exports.default = (app) => {
         route: String,
         details: String,
         errorDetails: String,
+        ip: String,
+        user: {
+            username: String,
+            wxname: String,
+            userProp: String,
+            loginname: String
+        }
     }, {
         versionKey: false,
         timestamps: true

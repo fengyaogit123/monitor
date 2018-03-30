@@ -1,16 +1,30 @@
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
 const egg_1 = require("egg");
-const log_1 = require("../../rule/log");
 class logController extends egg_1.Controller {
     async create() {
-        let result = await this.ctx.helper.validate(log_1.LogRule, this.ctx.query);
-        if (result)
-            return this.ctx.validate(result);
-        this.ctx.body = await this.service.log.create(this.ctx.query);
+        const rule = {
+            project: { type: "string", required: true, message: "请输入项目" },
+        };
+        const data = this.ctx.query;
+        await this.ctx.validate(rule, data);
+        //判断域名是否符合要求
+        //根据projectid 获取允许域名
+        this.ctx.body = await this.service.log.create(Object.assign({}, data, { ip: this.ctx.ip }));
+        //根据 project 获取email 发送
     }
+    //获取全部
     async list() {
-        this.ctx.body = await this.service.log.list();
+        this.ctx.body = await this.service.log.list(this.ctx.query);
+    }
+    //删除多个
+    async dels() {
+        const rule = {
+            ids: { type: "array", required: true, message: "ids为空" }
+        };
+        const data = this.ctx.request.body;
+        await this.ctx.validate(rule, data);
+        this.ctx.body = await this.service.log.dels(data.ids);
     }
 }
 exports.default = logController;

@@ -5,13 +5,12 @@ const egg_1 = require("egg");
 class UserController extends egg_1.Controller {
     async create() {
         const rule = {
-            userName: { type: "string", required: true, message: "请输入用户名" },
+            email: { type: "string", required: true, message: "email不能为空" },
             password: { type: "string", required: true, message: "请输入密码" }
         };
-        let result = this.ctx.helper.validate(rule, this.ctx.query);
-        console.log(result);
-        this.ctx.body = await this.ctx.model.Users.find(this.ctx.query);
-        // this.ctx.body = await this.service.users.create(this.ctx.request.body);
+        const data = this.ctx.request.query;
+        await this.ctx.validate(rule, data);
+        this.ctx.body = await this.ctx.service.users.create(data);
     }
 }
 exports.default = UserController;
